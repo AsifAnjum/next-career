@@ -94,8 +94,9 @@ const LoginForm = () => {
         } else {
           router.push("/");
         }
+      } else {
+        throw new Error(res.error);
       }
-      throw new Error(res.error);
     } catch (error: any) {
       toast.error("Login failed", {
         description: "Please check the form and try again",
