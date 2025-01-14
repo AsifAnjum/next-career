@@ -40,9 +40,9 @@ export async function signInWithCredentials(
       switch (error.type) {
         case "CallbackRouteError":
         case "CredentialsSignin":
-          throw new Error(error.cause?.err?.message || "An error occurred");
+          return { error: error.cause?.err?.message || "An error occurred" };
         default:
-          throw new Error("An error occurred");
+          return { error: "An error occurred" };
       }
     }
     throw error;

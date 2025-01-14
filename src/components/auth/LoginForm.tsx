@@ -86,7 +86,7 @@ const LoginForm = () => {
     try {
       const res = await signInWithCredentials(data);
 
-      if (res) {
+      if (!res.error) {
         toast.success("Login successful");
 
         if (redirectTo) {
@@ -95,6 +95,7 @@ const LoginForm = () => {
           router.push("/");
         }
       }
+      throw new Error(res.error);
     } catch (error: any) {
       toast.error("Login failed", {
         description: "Please check the form and try again",
