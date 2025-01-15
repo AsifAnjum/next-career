@@ -11,7 +11,7 @@ email: b@gmail.com \
 
 ## Project Overview
 
-AsifAnjum Next Career Platform is a comprehensive application that combines a job portal and blogging platform into one cohesive experience. The platform allows users, HR personnel, authors, and administrators to perform tailored actions based on their roles. With features like profile management, job posting, blog creation, content management, and admin moderation, the platform empowers various user types to collaborate seamlessly.
+Next Career Platform is a comprehensive application that combines a job portal and blogging platform into one cohesive experience. The platform allows users, HR personnel, authors, and administrators to perform tailored actions based on their roles. With features like profile management, job posting, blog creation, content management, and admin moderation, the platform empowers various user types to collaborate seamlessly.
 
 ---
 
