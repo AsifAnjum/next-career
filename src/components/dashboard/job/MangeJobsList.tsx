@@ -12,9 +12,18 @@ import { IJob } from "@/db/models/jobModel";
 import ItemNotFound from "@/components/ui/ItemNotFound";
 import Pagination from "@/components/common/Pagination";
 import Link from "next/link";
+import getSession from "@/lib/getSession";
+import { admin, moderator } from "@/lib/constant";
 
 const MangeJobsList = async ({ searchParams }: { searchParams: any }) => {
   const queryParams = await searchParams;
+
+  const session = await getSession();
+
+  if (session && ![admin, moderator].includes(session.user.role)) {
+    queryParams.user = session.user._id;
+  }
+
   const { jobs, totalPages } = (await getAllJobs(queryParams, true)) as {
     jobs: IJob[];
     totalPages: number;

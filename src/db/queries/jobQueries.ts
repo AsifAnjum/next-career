@@ -1,6 +1,7 @@
 import { unstable_cache } from "next/cache";
 import JobModel from "../models/jobModel";
 import { Types, isObjectIdOrHexString } from "mongoose";
+import dbConnect from "../dbConnect";
 
 export const getAllJobs = unstable_cache(
   async (
@@ -9,7 +10,9 @@ export const getAllJobs = unstable_cache(
     isFeatured: boolean = false
   ) => {
     try {
-      const filters: any = {};
+      await dbConnect();
+
+      let filters: any = {};
       const queries: any = {};
 
       if (queryParams["search"]) {
@@ -43,6 +46,14 @@ export const getAllJobs = unstable_cache(
       if (isStaff) {
         if (queryParams["isPublished"]) {
           filters.isPublished = queryParams["isPublished"];
+        }
+
+        if (queryParams["user"]) {
+          // filters.authorInfo = filters.authorInfo || {};
+          filters = {
+            ...filters,
+            "postedBy._id": queryParams["user"],
+          };
         }
       } else {
         filters.isPublished = true;
@@ -102,6 +113,7 @@ export const getAllJobs = unstable_cache(
 
 export const getJobById = async (id: string, isStaff: boolean = false) => {
   try {
+    await dbConnect();
     if (!id) {
       return null;
     }
@@ -126,6 +138,7 @@ export const getJobById = async (id: string, isStaff: boolean = false) => {
 
 export const getRelatedJobs = async (jobId: string, jobTitle: string) => {
   try {
+    await dbConnect();
     if (!jobId || !jobTitle) {
       return [];
     }

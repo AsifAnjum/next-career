@@ -1,4 +1,5 @@
 import { createBlog, updateBlog } from "@/db/actions/blogActions";
+import dbConnect from "@/db/dbConnect";
 
 import { admin, author, contentManager, moderator } from "@/lib/constant";
 import getSession from "@/lib/getSession";
@@ -9,6 +10,7 @@ import { revalidateTag } from "next/cache";
 import { NextRequest } from "next/server";
 
 export const POST = async (request: NextRequest) => {
+  await dbConnect();
   const requiredFields = ["title", "content", "tags", "category"];
 
   const data = await request.json();
@@ -78,6 +80,7 @@ export const POST = async (request: NextRequest) => {
 };
 
 export const PATCH = async (request: NextRequest) => {
+  await dbConnect();
   const { _id, authorInfo, data } = await request.json();
 
   if (!_id || !authorInfo || !data) {

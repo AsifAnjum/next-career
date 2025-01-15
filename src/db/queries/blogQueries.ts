@@ -1,9 +1,11 @@
 import { isObjectIdOrHexString } from "mongoose";
 import blogModel from "../models/blogModel";
 import { unstable_cache } from "next/cache";
+import dbConnect from "../dbConnect";
 
 export const getBlogById = async (id: string, isStaff: boolean = false) => {
   try {
+    await dbConnect();
     if (!id) {
       return null;
     }
@@ -33,6 +35,8 @@ export const getBlogById = async (id: string, isStaff: boolean = false) => {
 export const getAllBlogs = unstable_cache(
   async (queryParams: any, isStaff: boolean = false) => {
     try {
+      await dbConnect();
+
       let filters: any = {};
       const queries: any = {};
 
@@ -114,6 +118,7 @@ export const getAllBlogs = unstable_cache(
 
 export const getFeaturedBlogs = async () => {
   try {
+    await dbConnect();
     const blogs = await blogModel
       .find({ isPublished: true, isFeatured: true })
       .select("_id title slug")
@@ -132,6 +137,7 @@ export const getRelatedBlogs = async (
   currentBlogId: string
 ) => {
   try {
+    await dbConnect();
     const blogs = await blogModel
       .find({
         tags: { $in: tags },

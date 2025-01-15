@@ -27,11 +27,12 @@ const Navbar = async () => {
 
   return (
     <header>
-      <nav className="mx-auto  flex items-center justify-between max-w-screen-2xl container overflow-hidden">
+      <nav className="mx-auto flex items-center justify-between max-w-screen-2xl overflow-x-hidden">
         <div className="md:hidden">
-          <DropdownMenu>
+          <DropdownMenu modal={false}>
             <DropdownMenuTrigger
               aria-label="trigger"
+              asChild
               className="border border-white"
             >
               <Menu size={30} />
@@ -85,7 +86,7 @@ const Navbar = async () => {
 
         <div className="font-semibold tracking-widest">
           {session?.user?._id ? (
-            <DropdownMenu>
+            <DropdownMenu modal={false}>
               <DropdownMenuTrigger>
                 <Avatar>
                   <AvatarImage

@@ -32,7 +32,7 @@ const DashboardLayout = async ({
     <SidebarProvider defaultOpen={defaultOpen}>
       <DashboardSidebar userRole={userRole} />
       <SidebarInset>
-        <main className="p-4 overflow-hidden">
+        <main className="p-4 ">
           <SidebarTrigger />
 
           {children}

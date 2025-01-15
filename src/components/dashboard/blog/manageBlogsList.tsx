@@ -12,9 +12,17 @@ import { IBlog } from "@/db/models/blogModel";
 import ItemNotFound from "@/components/ui/ItemNotFound";
 import Pagination from "@/components/common/Pagination";
 import Link from "next/link";
+import getSession from "@/lib/getSession";
+import { admin, moderator } from "@/lib/constant";
 
 const ManageBlogsList = async ({ searchParams }: { searchParams: any }) => {
   const queryParams = await searchParams;
+
+  const session = await getSession();
+
+  if (session && ![admin, moderator].includes(session.user.role)) {
+    queryParams.user = session.user._id;
+  }
 
   const { blogs, totalPages } = (await getAllBlogs(queryParams, true)) as {
     blogs: IBlog[];

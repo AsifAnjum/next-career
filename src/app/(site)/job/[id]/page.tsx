@@ -44,6 +44,7 @@ export async function generateMetadata({
   return {
     title: job.title,
     description: job.jobDescription.slice(0, 160),
+    keywords: job.title.split(" "),
   };
 }
 

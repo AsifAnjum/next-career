@@ -11,7 +11,11 @@ export default auth(async (req: NextRequest) => {
     return NextResponse.redirect(new URL(`/dashboard/profile`, req.url));
   }
 
-  const token = await getToken({ req, secret: process.env.AUTH_SECRET });
+  const token = await getToken({
+    req,
+    secret: process.env.AUTH_SECRET,
+    secureCookie: process.env.NODE_ENV == "production" ? true : false,
+  });
 
   if (!token || !token.user?.role) {
     return NextResponse.redirect(new URL("/login", req.url));

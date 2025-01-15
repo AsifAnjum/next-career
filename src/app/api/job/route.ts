@@ -1,4 +1,5 @@
 import { createJob, updateJob } from "@/db/actions/jobAction";
+import dbConnect from "@/db/dbConnect";
 
 import { admin, contentManager, hr, moderator } from "@/lib/constant";
 import getSession from "@/lib/getSession";
@@ -7,6 +8,7 @@ import { revalidateTag } from "next/cache";
 import { NextRequest } from "next/server";
 
 export const POST = async (request: NextRequest) => {
+  await dbConnect();
   const requiredFields = [
     "title",
     "company",
@@ -79,6 +81,7 @@ export const POST = async (request: NextRequest) => {
 };
 
 export const PATCH = async (request: NextRequest) => {
+  await dbConnect();
   const { _id, postedBy, data } = await request.json();
 
   if (!_id || !postedBy || !data) {

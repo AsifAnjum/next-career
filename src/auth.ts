@@ -7,6 +7,7 @@ import { IUser } from "./db/models/userModel";
 
 import { authConfig } from "@/auth.config";
 import { createUser } from "./db/actions/authActions";
+import dbConnect from "./db/dbConnect";
 
 export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
   ...authConfig,
@@ -20,8 +21,9 @@ export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
 
       async authorize(credentials: any) {
         const { email, password } = credentials;
-        // await dbConnect();
+
         try {
+          await dbConnect();
           const user: IUser | null = await findUserByEmail(email);
 
           if (!user) {
@@ -63,6 +65,7 @@ export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
   callbacks: {
     signIn: async ({ user, account }): Promise<any> => {
       if (account?.provider == "google") {
+        await dbConnect();
         const { name, email, image } = user;
 
         try {

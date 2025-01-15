@@ -7,6 +7,7 @@ import { AuthError } from "next-auth";
 
 import { z } from "zod";
 import UserModel from "../models/userModel";
+import dbConnect from "../dbConnect";
 
 export async function userSignOut() {
   await signOut();
@@ -50,9 +51,15 @@ export async function signInWithCredentials(
 }
 
 export async function createUser(value: any) {
-  return await UserModel.create(value);
+  try {
+    await dbConnect();
+    return await UserModel.create(value);
+  } catch (error) {
+    throw error;
+  }
 }
 
 export async function updateUser(id: string, value: any) {
+  await dbConnect();
   return await UserModel.findByIdAndUpdate(id, value, { new: true });
 }

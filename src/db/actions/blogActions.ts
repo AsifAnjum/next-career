@@ -1,11 +1,14 @@
 import { isObjectIdOrHexString } from "mongoose";
 import blogModel from "../models/blogModel";
+import dbConnect from "../dbConnect";
 
 export const createBlog = async (value: any) => {
+  await dbConnect();
   return await blogModel.create(value);
 };
 
 export async function updateBlog(id: string, value: any) {
+  await dbConnect();
   return await blogModel
     .findByIdAndUpdate(id, value, { new: true })
     .lean()
@@ -14,6 +17,7 @@ export async function updateBlog(id: string, value: any) {
 
 export const updateBlogByUser = async (id: string, data: any) => {
   try {
+    await dbConnect();
     if (!id) {
       return null;
     }

@@ -1,3 +1,4 @@
+import dbConnect from "@/db/dbConnect";
 import { findUserByEmail } from "@/db/queries/userQueries";
 
 import { responseData } from "@/lib/responseHelper";
@@ -7,6 +8,7 @@ export const GET = async (
   req: NextRequest,
   { params }: { params: Promise<{ email: string }> }
 ) => {
+  await dbConnect();
   try {
     const { email } = await params;
 

@@ -1,8 +1,10 @@
 import { isObjectIdOrHexString } from "mongoose";
 import UserModel from "../models/userModel";
+import dbConnect from "../dbConnect";
 
 export const findUserByEmail = async (email: string) => {
   try {
+    await dbConnect();
     const user = await UserModel.findOne({ email });
 
     if (user) return user;
@@ -15,6 +17,7 @@ export const findUserByEmail = async (email: string) => {
 
 export const getAllUsers = async (queryParams: any) => {
   try {
+    await dbConnect();
     const filters: any = {};
 
     if (queryParams.search) {
@@ -49,6 +52,7 @@ export const getAllUsers = async (queryParams: any) => {
 
 export const findUserById = async (id: string) => {
   try {
+    await dbConnect();
     if (!id) {
       return null;
     }

@@ -1,8 +1,10 @@
 import { NextRequest } from "next/server";
 import { responseData } from "@/lib/responseHelper";
 import UserModel from "@/db/models/userModel";
+import dbConnect from "@/db/dbConnect";
 
 export const POST = async (request: NextRequest) => {
+  await dbConnect();
   const { name, email, password, gender } = await request.json();
 
   if (!name || !password || !email || !gender) {

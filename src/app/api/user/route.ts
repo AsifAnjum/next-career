@@ -2,6 +2,7 @@ import { unstable_update } from "@/auth";
 import { updateUser } from "@/db/actions/authActions";
 import { updateBlogByUser } from "@/db/actions/blogActions";
 import { updateJobByUser } from "@/db/actions/jobAction";
+import dbConnect from "@/db/dbConnect";
 
 import { admin, moderator } from "@/lib/constant";
 import getSession from "@/lib/getSession";
@@ -9,6 +10,7 @@ import { responseData } from "@/lib/responseHelper";
 import { NextRequest } from "next/server";
 
 export const PATCH = async (request: NextRequest) => {
+  await dbConnect();
   const { _id, adminUpdate, data } = await request.json();
 
   if (!_id || !data) {
@@ -55,7 +57,7 @@ export const PATCH = async (request: NextRequest) => {
 
       await updateBlogByUser(_id, data);
 
-      await unstable_update({ user: data });
+      // await unstable_update({ user: data });
 
       return responseData(200, true, "User updated successfully");
     } catch (error: any) {

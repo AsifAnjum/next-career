@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
+import { cache } from "react";
 
-export default async function getSession() {
+const getSession = cache(async () => {
   const session = await auth();
 
   if (session?.user?._id) {
@@ -8,4 +9,6 @@ export default async function getSession() {
   }
 
   return null;
-}
+});
+
+export default getSession;
